@@ -1,16 +1,16 @@
 version: 2.1
 
-Jobs:
+jobs:
   build:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - run: npm i
       - save_cache:
           key: "npm-packages"
           paths:
             - /src/node_modules
+      - run: npm i
       - run: npm run lint
   test:
     docker:
@@ -31,8 +31,7 @@ Jobs:
           keys:
             - "npm-packages"
       - run: npm audit
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+
 workflows:
   my_workflow:
     jobs:
